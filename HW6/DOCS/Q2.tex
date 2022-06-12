@@ -1,0 +1,31 @@
+\begin{latin}
+
+\section{3.25 Maximum probability distance between distributions}
+Let $ p,q \in R^{n}$ represent two probability distributions on $ \{1, \dots , n\} $ (so $ p,q \succeq 0, 1^{T} p = 1^{T} q = 1 $). We define the \textit{maximum
+	probability distance} $ d_{mp}(p, q) $ between $ p $ and $ q $ as the maximum difference in probability assigned by $ p $ and $ q $, over all events:
+\begin{equation*}
+	d_{mp}(p, q) = \max\{| \text{prob}(p, C) - \text{prob}(q, C)| | C \subseteq \{1, . . . , n\}\}.
+\end{equation*}
+Here $ \text{prob}(p, C) $ is the probability of $ C $, under the distribution $ p $, i.e., $ \text{prob}(p, C) = \sum_{i\in C} p_{i} $. \\
+Find a simple expression for $ d_{mp} $, involving $ |p - q|_{1} = \sum_{i=1}^{n} |p_{i} - q_{i}| $, and show that $ d_{mp} $ is a convex function on $ R^{n} \times R^{n} $. (Its domain is $ \{(p, q) | p, q \succeq 0, 1^{T} p = 1^{T} q = 1\} $, but
+it has a natural extension to all of $ R^{n} \times R^{n} $.)
+\\
+\textcolor{red}{\textbf{Solution:}}
+\\
+Imagine that $ C^{*} $ is the argmax of $ \{| \text{prob}(p, C) - \text{prob}(q, C)\} $ over all sets. So $ C^{*} $ is a set like $ \{ n_{1}, n_{2}, \dots, n_{k}\} $. So 
+\begin{equation*}
+	d_{mp}(p, q) = |\sum_{i=1}^{k} \text{prob}(p, n_{i}) - \sum_{i=1}^{k} \text{prob}(q, n_{i})| = |\sum_{i=1}^{k} \big(\text{prob}(p, n_{i}) - \text{prob}(q, n_{i})\big)|
+\end{equation*}
+I claim that $ \text{prob}(p, n_{i}) - \text{prob}(q, n_{i}) $ is either positive for all $ i = 1:k $ or negative for all $ i = 1:k $. Otherwise by omitting some $ n_{i} $ (with opposite sign from $ \sum_{i=1}^{k} \text{prob}(p, n_{i}) - \sum_{i=1}^{k} \text{prob}(q, n_{i}) $) from $ C^{*} $, we could get score better than $ d_{mp}(p, q) $. I also clam that every $ n_{i} $ with same sign value with $ \sum_{i=1}^{k} \text{prob}(p, n_{i}) - \sum_{i=1}^{k} \text{prob}(q, n_{i}) $ is in $ C^{*} $. Because if it is not, by adding this number to our  $ C^{*} $ , we could get score better than $ d_{mp}(p, q) $. So $ C^{*} $ is the set of all $ 1 \leq n_{i} \leq n $ that $ \text{prob}(p, n_{i}) - \sum_{i=1}^{k} \text{prob}(q, n_{i}) $ has the same sign for all members.
+
+So we can divide the set $ \{1, \dots , n\} $ into two subsets $ S_{1} $ and $ S_{2} $ that for every item in $ S_{1} $ like $ n_{i} $, we have $ \text{prob}(p, n_{i}) - \text{prob}(q, n_{i}) > 0 $ and with opposite inequality for $ S_{2} $. As described before,
+\begin{equation*}
+	 d_{mp}(p, q) = \sum_{n\in S_{1}} \big(\text{prob}(p, n) - \text{prob}(q, n)\big) = - \sum_{n\in S_{2}} \big(\text{prob}(p, n) - \text{prob}(q, n)\big)
+\end{equation*}
+This equation is true because $ \sum_{n\in S_{1} \cup S_{2}} \big(\text{prob}(p, n) - \text{prob}(q, n)\big) = \sum_{n\in S_{1} \cup S_{2}} \text{prob}(p, n) - \sum_{n\in S_{1} \cup S_{2}} \text{prob}(q, n) = 1 - 1 = 0 $.
+We can see that
+\begin{equation*}
+	|p - q|_{1} = \sum_{i=1}^{n} |p_{i} - q_{i}| = \sum_{n\in S_{1}} \big(\text{prob}(p, n) - \text{prob}(q, n)\big) - \sum_{n\in S_{2}} \big(\text{prob}(p, n) - \text{prob}(q, n)\big) =  d_{mp}(p, q) +  d_{mp}(p, q) = 2  d_{mp}(p, q)
+\end{equation*}
+So  $ d_{mp}(p, q) = |p - q|_{1}/2$
+\end{latin}

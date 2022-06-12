@@ -1,0 +1,65 @@
+\documentclass[a4paper]{article}
+\usepackage{graphicx}
+\usepackage{amsmath, amsfonts, geometry, float, listings, enumerate, multicol}
+\usepackage{multicol, float, color, colortbl}
+\usepackage{tikz, titlesec, parskip, pgfplots, filecontents}
+\usepackage{hyperref}
+\usepackage{amsmath}
+\usepackage{tikz, titlesec, parskip}
+\usepackage{tikz,pgfplots}
+\usepackage[americanvoltages,fulldiodes,siunitx]{circuitikz}
+\usetikzlibrary{shapes,arrows}
+\usepackage{enumitem}
+\titleformat*{\subsubsection}{\LARGE\bfseries}
+
+\titlespacing{\section}{0pt}{10pt}{0pt}
+\titlespacing{\subsection}{0pt}{10pt}{0pt}
+\titlespacing{\subsubsection}{0pt}{10pt}{0pt}
+
+
+
+\usetikzlibrary{calc,patterns,through}
+\newcommand{\arcangle}{%
+	\mathord{<\mspace{-9mu}\mathrel{)}\mspace{2mu}}%
+}
+
+\renewcommand{\baselinestretch}{1.4}
+ \geometry{
+ a4paper,
+ total={170mm,257mm},
+ left=20mm,
+ top=20mm,
+ }
+\usepackage{fancyhdr}
+\usepackage{indentfirst}
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{\textbf{بهینه‌سازی در علوم داده}}
+\lhead{\textbf{ تمرین ششم}}
+\cfoot{(\space \space \space \space \textbf{\thepage}  \space \space \space)}
+\renewcommand{\headrulewidth}{1pt}
+\renewcommand{\footrulewidth}{1pt}
+
+ 
+\usepackage{xepersian}
+\setlatintextfont{Times New Roman}
+\settextfont{XB Niloofar}
+\setdigitfont{XB Niloofar}
+\DefaultMathsDigits
+
+\makeatletter
+\bidi@patchcmd{\@Abjad}{آ}{الف}
+{\typeout{Succeeded in changing آ into الف}}
+{\typeout{Failed in changing آ into الف}}
+\makeatother
+\PersianAlphs
+
+\begin{document}
+\include{Q1}
+\include{Q2}
+\include{Q3}
+\include{Q4}
+\include{Q5}
+\include{Q6}
+\end{document}
+

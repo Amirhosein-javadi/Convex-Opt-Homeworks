@@ -1,0 +1,59 @@
+\begin{minipage}{0.6\textwidth}
+	\begin{bf}
+		\begin{center}
+			\large
+			به نام خدا\\
+			دکتر مجتبی تفاق - بهینه‌سازی در علوم داده \\
+			\Large
+			\vspace{0.4cm}
+			امیرحسین جوادی (97101489)
+		\end{center}
+	\end{bf}
+	\normalsize
+\end{minipage} \hfill
+\begin{minipage}{0.35\textwidth}
+	\begin{flushleft}
+		\includegraphics[width=0.5\textwidth]{logo.png}
+	\end{flushleft}
+	\begin{flushleft}
+		دانشگاه صنعتی شریف\\
+		دانشکده مهندسی برق\\
+	\end{flushleft}
+	
+\end{minipage}
+\\
+\rule[0.1\baselineskip]{\textwidth}{1pt}
+\begin{latin}
+
+\section{3.18}
+Adapt the proof of concavity of the log-determinant function in §3.1.5 to show the following.
+\begin{enumerate}
+	\item $ f(X) = tr (X^{-1}) $ is convex on dom $ f = S^{n}_{++} $.
+	\item $ f(X) = (\det X)^{1/n} $ is concave on dom $ f = S^{n}_{++} $.
+\end{enumerate}
+\textcolor{red}{\textbf{Solution:}}
+
+\begin{enumerate}
+	\item Let $ A $ be symmetric positive definite matrix hence there is a diagonal matrix $ D $ whose diagonal entries are nonzero and $ A=PDP^{-1} $ so $ A^{-1}=PD^{-1}P^{-1} $ and $ Tr(A^{-1})=Tr(D^{-1}) $. Now $ D $ being diagonal matrix with non zero diagonal entries $ D^{-1} $ has diagonal entries reciprocal of the diagonal entries of $ D $ so $ Tr(D^{-1}) $ is sum of the inverses of the diagonal entries of $ D $. We also know that $ Tr(AB)=Tr(BA) $.
+	\\
+	By taking $ g(t) = f(x + tv ) $, where $ x \in S^{n}_{++} $ and $ v \in S^{n} $:
+	\begin{gather*}
+		g(t) = f(x+tv) = tr((x+tv)^{-1}) = tr\big[x^{-1} (I + t x^{-1/2}vx^{-1/2})^{-1}\big]
+		\\
+	   = tr\big[x^{-1} (B B^{-1} + t B W B^{-1})^{-1}\big] = tr\big[x^{-1} B(I+t W)^{-1}B^{-1}\big]
+	   \\
+	   = tr\big[B^{-1} x^{-1} B(I+t W)^{-1}\big] = \sum_{i=1}^{n} (B^{-1} x^{-1} B)_{ii} (1+t \lambda_{i})^{-1}
+	\end{gather*}
+	which $ x^{-1/2}vx^{-1/2} = B W B^{-1}$. Since sum of convex functions $ 1/(1 + t\lambda_{i}) $ is convex, $ g(t) $ is convex on domain $ \{ t | x+tv \in S^{n}_{++} \} $. So $ f(x) $ is convex.
+	\item By taking $ g(t) = f(x + tv ) $, where $ x \in S^{n}_{++} $ and $ v \in S^{n} $:
+	\begin{gather*}
+		g(t) = f(x+tv) = (\det (x+tv))^{1/n} = (\det (x^{1/2} (I + t x^{-1/2}vx^{-1/2}) x^{1/2} ))^{1/n} 
+		\\
+		= [\det(x^{1/2}) \det(I + t x^{-1/2}vx^{-1/2}) \det(x^{1/2})]^{1/n} = \det(x^{1/2})^{2/n} \det(I + t x^{-1/2}vx^{-1/2})^{1/n} 
+		\\
+		= \det(x^{1/2})^{2/n} \big[\prod_{i=1}^{n} (1 + t \lambda_{i})\big]^{1/n} 
+	\end{gather*}
+	which $ \lambda_{i} $ is $ i $th eigenvalue of $ x^{-1/2}vx^{-1/2} $. Since geometric mean is concave on $ R^{n}_{++} $. So $ g(t) $ is concave on domain $ \{ t | x+tv \in S^{n}_{++} \} $. So $ f(x) $ is convex.
+\end{enumerate}
+
+\end{latin}

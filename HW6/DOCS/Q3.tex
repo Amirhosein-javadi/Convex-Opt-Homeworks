@@ -1,0 +1,27 @@
+\begin{latin}
+
+\section{3.27 Diagonal elements of Cholesky factor.}
+Each $ X \in S^{n}_{++} $ has a unique Cholesky factorization $ X = LL^{T} $, where $ L $ is lower triangular, with $ L_{ii} > 0 $. Show that $ L_{ii} $ is a concave function of $ X $ (with domain $ S^{n}_{++} $).
+
+Hint. $ L_{ii} $ can be expressed as $ L_{ii} = (w - z^{T} Y^{-1} z)^{1/2}$, where
+\begin{equation*}
+	\begin{bmatrix}
+		Y & z \\
+		z^{T} & w 
+	\end{bmatrix}
+\end{equation*}
+is the leading $ i \times i $ submatrix of $ X $.
+\\
+\textcolor{red}{\textbf{Solution:}}
+\\
+Because $ -()^{1/2} $ is a convex, non increasing, we only should prove that $ w - z^{T} Y^{-1} z $ is concave.
+\\
+$ f(z,Y) = z^{T} Y^{-1} z $ with domain = $ \{ (z,Y) | Y \succeq 0\} $ is convex in both $ z $ and $ Y $. To prove that we will use epigraph of $ f $. (Helping form Example 3.4 of book)
+\begin{equation*}
+	epi_{f} = \{(z,Y,t) | (z,Y) \in \text{ domain}_{f} ,f(z,Y) \leq t\} = \bigg\{ (z,Y,t) | \begin{bmatrix}
+		Y & z \\
+		z^{T} & t
+	\end{bmatrix} \succeq 0, Y \succ 0 \bigg\}
+\end{equation*}
+using the Schur complement condition for positive semi definiteness of a block matrix. The last condition is a linear matrix inequality in $ (z, Y, t) $, and therefore epi $ f $ is convex. So is $ f $. Therefore, $ w - z^{T} Y^{-1} z $ is a concave function of $ X $. As a result of composition rule, $ L_{ii} $ will be concave.
+\end{latin}

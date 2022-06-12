@@ -1,0 +1,31 @@
+\begin{latin}
+
+\section{3.37}
+Show that the conjugate of $ f(X) = tr(X^{-1}) $ with dom $ f = S^{n}_{++} $ is given by
+\begin{equation*}
+	f^{*}(Y ) = -2 \, tr(-Y )^{1/2}, \; dom f^{*} = - S^{n}_{+}.
+\end{equation*}
+Hint: The gradient of $ f $ is $ \nabla f(X) = -X^{−2}$
+\\
+\textcolor{red}{\textbf{Solution:}}
+\\
+The conjugate function is defined as
+\begin{gather*}
+	f^{*}(Y) = \sup_{X \in \text{ dom }f} ( tr(YX) - f(X)) = \sup_{X \in \text{ dom }f} (tr(YX) - tr(X^{-1}))
+\end{gather*}	
+since $ tr(YX) $ is the standard inner product on $ S^{n} $.
+We first show that $ tr(YX) - tr(X^{-1}) $ is unbounded above unless $ Y \preceq 0 $. If not, then $ Y $ has an eigenvector $ v_{1} $, with $ |v|_{2} = 1 $, and eigenvalue $ \lambda_{1} > 0 $. Suppose $ Y $ has eigenvalue decomposition $ Y = AWA^{T} $ with $ W_{1,1}= \lambda_{1} > 0 $. By taking the same eigenvectors for $ X = A \text{ diag}(t,1,\dots,1) A^{T}$ we will have: 
+
+\begin{gather*}
+	tr(YX) - tr(X^{-1}) = tr(A W \text{ diag}(t,1,\dots,1) A^{T} ) - tr(X^{-1}) = [t\lambda_{1} + \sum_{i=2} ^{n} \lambda_{i}] - [\frac{1}{t} + 1 + 1 + \dots + 1] 
+	\\
+	= t\lambda_{1} + \sum_{i=2} ^{n} \lambda_{i} - \frac{1}{t} - n+1
+\end{gather*}
+which is unbounded as $ t \to \infty $. Now consider the case $ Y \preceq 0 $. By taking gradient of $ tr(YX) - f(X) $ and making it equal to zero, we will have
+\begin{gather*}
+	tr(YX) = \sum_{i=1}^{n} \sum_{j=1}^{n} Y_{ij} X_{ij} \Rightarrow \frac{\partial tr(YX)}{\partial X_{ij}} = Y_{ij} \Rightarrow \nabla_{X} tr(YX) = Y \Rightarrow Y =  \nabla f(X) = -X^{−2} \Rightarrow X = (-Y)^{-1/2}
+	\\
+	f^{*}(Y) = tr(YX) - tr(X^{-1}) = tr(Y (-Y)^{-1/2}) - tr([(-Y)^{-1/2}]^{-1}) = - tr(-Y)^{1/2} - tr(-Y)^{1/2} = -2 \, tr(-Y)^{1/2}
+\end{gather*}
+I assumed that $ Y $ is invertible. For singular $ Y $, we know that conjugate functions are always closed.
+\end{latin}

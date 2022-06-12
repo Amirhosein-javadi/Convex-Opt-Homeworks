@@ -1,0 +1,116 @@
+\begin{latin}
+
+\section{3.49 Log-Concave}
+Show that the following functions are log-concave.
+
+\begin{enumerate}
+	\item Logistic function: $ f(x) = e^{x}/(1 + e^{x}) $ with dom $ f = R $.
+	\item Harmonic mean:
+		\begin{equation*}
+			f(x) = \frac{1}{1/x_{1} + \dots + 1/x_{n}}  \quad \text{dom} f = R^{n}_{++}.
+		\end{equation*}
+	\item Product over sum:
+		\begin{equation*}
+			f(x) = \frac{\prod_{i=1}^{n} x_{i}}{\sum_{i=1}^{n} x_{i}}  \quad \text{dom} f = R^{n}_{++}.
+		\end{equation*}
+	\item Determinant over trace:
+		\begin{equation*}
+			f(X) = \frac{\det(X)}{Tr(X)}  \quad \text{dom} f = R^{n}_{++}.
+		\end{equation*}
+\end{enumerate}
+\textcolor{red}{\textbf{Solution:}}
+\\
+\begin{enumerate}
+	\item
+	\begin{gather*}
+		f(x) = \frac{e^{x}}{1 + e^{x}} \Rightarrow f'(x) = \frac{e^{x}}{(1 + e^{x})^{2}} \Rightarrow f''(x) = \frac{e^{x} - e^{2x}}{(1 + e^{x})^{3}}
+		\\
+		f(x) \times f''(x) = \frac{e^{2x} - e^{3x}}{(1 + e^{x})^{4}} 
+		\qquad
+		f'^{2}(x) = \frac{e^{2x}}{(1 + e^{x})^{4}}
+		\\
+		f'^{2}(x) - f(x) \times f''(x) = \frac{e^{3x}}{(1 + e^{x})^{4}} > 0 
+	\end{gather*}
+	So f is log-concave
+	\item
+	Consider $ g(x) = \log (f(x)) = - \log \sum_{i=1}^{n} \frac{1}{x_{i}} $. Now I want to show that $ g(x) $ is convex by showing $ \nabla^{2}g(x) \preceq 0 $
+	\begin{gather*}
+		\frac{\partial g(x)}{\partial x_{i}} = \frac{1/x_{i}^{2}}{\sum_{i=1}^{n} \frac{1}{x_{i}}} \Rightarrow \begin{cases}
+			\frac{\partial^{2} g(x)}{\partial^{2} x_{i}} = \dfrac{-2/x_{i}^{3}}{\sum_{i=1}^{n} \frac{1}{x_{i}}} + \dfrac{1/x_{i}^{4}}{\bigg[\sum_{i=1}^{n} \frac{1}{x_{i}}\bigg]^{2}}
+			\\
+			\frac{\partial^{2} g(x)}{\partial x_{i} \partial x_{j}} = \dfrac{1/(x_{i}x_{j})^{2}}{\bigg[\sum_{i=1}^{n} \frac{1}{x_{i}}\bigg]^{2}}
+		\end{cases}
+		\\
+		y^{T} \nabla^{2}g(x) y = \sum_{i=1}^{n} \sum_{j=1}^{n} y_{i} \nabla^{2}_{ij} g(x) y_{j} 
+		\\
+		= \sum_{i=1}^{n} \dfrac{-2 y_{i}^{2} /x_{i}^{3}}{\sum_{i=1}^{n} \frac{1}{x_{i}}} + \dfrac{y_{i}^{2}/x_{i}^{4}}{\bigg[\sum_{i=1}^{n} \frac{1}{x_{i}}\bigg]^{2}} 
+		+ 
+		\sum_{i=1}^{n} \sum_{j \neq i} \dfrac{y_{i} y_{j}/(x_{i}x_{j})^{2}}{\bigg[\sum_{i=1}^{n} \frac{1}{x_{i}}\bigg]^{2}}
+		\\
+		= \frac{1}{\bigg[\sum_{i=1}^{n} \frac{1}{x_{i}}\bigg]^{2}} \bigg[ \big(\sum_{i=1}^{n}y_{i}/x_{i}^{2}\big)^{2} -  \big(\sum_{i=1}^{n}2y_{i}^{2}/x_{i}^{3}\big)
+		\big(\sum_{i=1}^{n}1/x_{i}\big)
+		\bigg] \leq 0
+	\end{gather*}
+	The last term is true because of Cauchy-Schwarz inequality $ (x^{T} y)^{2} \leq |x|_{2}^{2} |y|_{2}^{2} $. So f is log-concave.
+	\item 
+	Consider $ g(x) = \log (f(x)) =  \log \frac{\prod_{i=1}^{n} x_{i}}{\sum_{i=1}^{n} x_{i}}  = \sum_{i=1}^{n} \log x_{i} - \log \sum_{i=1}^{n} x_{i} $. Now consider $ h(t) = g(x + tv) $ 
+	\begin{gather*}
+		h(t) = \sum_{i=1}^{n} \log (x_{i}+tv_{i}) - \log \sum_{i=1}^{n} (x_{i}+tv_{i})
+		\\
+		\Rightarrow h'(t) = \sum_{i=1}^{n} \frac{v_{i}}{x_{i}+tv_{i}} - \frac{\sum_{i=1}^{n}v_{i}}{\sum_{i=1}^{n}x_{i} + t\sum_{i=1}^{n}v_{i}}
+		\\
+		\Rightarrow h''(t) = - \sum_{i=1}^{n} \frac{v_{i}^{2}}{(x_{i}+tv_{i})^{2}} + \frac{(\sum_{i=1}^{n}v_{i})^{2}}{(\sum_{i=1}^{n}x_{i} + t\sum_{i=1}^{n}v_{i})^{2}} 
+	\end{gather*}
+	We do not have to show it for other values of $ t $ except $ 0 $, because we have already shown this for arbitrary $ x $. If you want to know whether this holds true for $ x+t_{0}v $, for some fixed $ t_{0} \in R \setminus \{0\} $, then simply redefine $ x_{0}=x+t_{0}v $, consider the function $ t \to f(x_{0}+tv) $, and do all the below steps.
+	\begin{gather*}
+		h''(0) = - \sum_{i=1}^{n} \frac{v_{i}^{2}}{x_{i}^{2}} + \frac{(\sum_{i=1}^{n}v_{i})^{2}}{(\sum_{i=1}^{n}x_{i})^{2}} \leq 0 
+	\end{gather*}
+	If $ \sum_{i=1}^{n}v_{i} = 0 $, then the inequality will surely works because the  second term will be zero and the first term is always non-positive.
+	\\
+	Otherwise ($ 1^{T} v \neq 0 $), we assume that $ 1^{T} v = 1^{T} x $. This assumption will not destroy the generality of solution because scaling $ x $ will not change the sign of the left hand of equation and scale both part of left hand of equation by same factor. So by our latest assumption, the problem reduces to 
+	\begin{equation*}
+		 \sum_{i=1}^{n} \frac{v_{i}^{2}}{x_{i}^{2}} \geq 1 
+	\end{equation*}
+	 subject to $ x \succ 0 $ and $ 1^{T} v = 1^{T} x $. If we can show that the minimum of left hand side of equation is greater or equal as zero, the proof will be completed.
+	 \begin{gather*}
+	 	h(v) = \sum_{i=1}^{n} \frac{v_{i}^{2}}{x_{i}^{2}}
+	 	\\
+	 	\text{ subject to } x \succ 0 , 1^{T} v = 1^{T} x
+	 \end{gather*}
+ 	This is a least squares problem with linear constrain. (The constrain of $ x \succ 0 $ is not important in optimization) The result of this least squares problem is 
+ 	\begin{gather*}
+ 		v_{i} = \frac{\sum_{j=1}^{n} x_{j}}{\sum_{j=1}^{n} x^{2}_{j}} x^{2}_{i}
+ 	\end{gather*}
+ 	Therefore the minimum value is 
+ 	\begin{gather*}
+ 		v_{i} = \bigg(\frac{\sum_{j=1}^{n} x_{j}}{\sum_{j=1}^{n} x^{2}_{j}}\bigg)^{2} \sum_{i=1}^{n}x^{2}_{i} = \dfrac{(\sum_{j=1}^{n} x_{j})^{2}}{\sum_{i=1}^{n}x^{2}_{i}} = \frac{||x||_{1}^{2}}{||x||_{2}}\geq 1
+ 	\end{gather*}
+ 	The last equation is true because $ ||x||_{2} \leq ||x||_{1}^{2} $. So f is log-concave.
+	\item Consider $ g(X) = \log (f(x)) = \log(\det(X)) - \log(Tr(X))$. We should prove that $ g(X) $ is concave. By taking $ h(t) = g(X+tV)$ where $ X \in S^{n}_{++} $ and $ V \in S^{n} $:
+	\begin{gather*}
+		h(t) = g(X+tV) = \log(\det(X+tV)) - \log(Tr(X+tV)) 
+		\\
+		= \log(\det(X)) + \log(\det(I+tX^{-1/2}VX^{-1/2})) - \log(Tr[X^{1/2}(I+tX^{-1/2}VX^{-1/2})X^{1/2}]) 
+		\\
+		= \log(\det(X)) + \log(\det(I+tX^{-1/2}VX^{-1/2})) - \log(Tr[X(I+tX^{-1/2}VX^{-1/2})]) 
+		\\
+		= \log(\det(X)) + \log(\det(I+tB W B^{T})) -
+		\log(Tr[X(I+tB W B^{T})]) 
+		\\
+		= \log(\det(X)) + \log(\det(B (tW+I) B^{T})) -
+		\log(Tr[X(B (tW+I) B^{T})]) 
+		\\
+		= \log(\det(X)) + \log(\det(B (tW+I) B^{T})) -
+		\log(Tr[B^{T} XB (tW+I)]) 
+		\\
+		= \log(\det(X)) + \log \big[\prod_{i=1}^{n} (1 + t \lambda_{i})\big] - \log \big[\sum_{i=1}^{n} (b_{i}^{T} X b_{i}) (1+t \lambda_{i}) \big] 
+		\\
+		= \log(\det(X)) + \sum_{i=1}^{n} \log \big[1 + t \lambda_{i}\big] -  \log \big[\sum_{i=1}^{n} (b_{i}^{T} X b_{i}) (1+t \lambda_{i}) \big] 
+		\\
+		= \log(\det(X)) - \sum_{i=1}^{n} \log (b_{i}^{T} X b_{i}) + \sum_{i=1}^{n}  \log \big[ (b_{i}^{T} X b_{i}) (1+t \lambda_{i}) \big] -  \log \big[\sum_{i=1}^{n} (b_{i}^{T} X b_{i}) (1+t \lambda_{i}) \big] 
+		\\
+		= C + \sum_{i=1}^{n}  \log \big[ (b_{i}^{T} X b_{i}) (1+t \lambda_{i}) \big] -  \log \big[\sum_{i=1}^{n} (b_{i}^{T} X b_{i}) (1+t \lambda_{i}) \big]
+	\end{gather*}
+	which $ X^{-1/2}VX^{-1/2} = B W B^{T} = \sum_{i=1}^{n} \lambda_{i} b_{i} b_{i}^{T}$. The last term is proved to be concave in part 3. As a result, $ f $ is log-concave.
+\end{enumerate}
+\end{latin}
