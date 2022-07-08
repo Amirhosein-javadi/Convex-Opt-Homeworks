@@ -1,0 +1,140 @@
+\begin{latin}
+
+\section{4.26 Hyperbolic constraints as SOC constraints.}
+
+Verify that $ x \in R^{n}, $ $ y, z \in R $ satisfy
+\begin{equation*}
+	x^{T}x \leq yz, \qquad y \geq 0, \qquad z \geq 0
+\end{equation*}
+if and only if
+\begin{equation*}
+	\Bigg|\Bigg|\begin{bmatrix}
+		2x 
+		\\
+		y-z
+	\end{bmatrix}\Bigg|\Bigg|_{2} \leq y + z, \qquad y \geq 0, \qquad z \geq 0.
+\end{equation*}
+Use this observation to cast the following problems as SOCPs.
+\begin{enumerate}
+	\item Maximizing harmonic mean
+		\begin{equation*}
+			\max (\sum_{i=1}^{m} 1/(a^{T}_{i} x - b_{i}))^{-1} 
+		\end{equation*}
+	with domain $ \{x | Ax \succ b\} $, where $ a^{T}_{i} $ is the $ i $th row of $ A $.
+	\item Maximizing geometric mean.
+		\begin{equation*}
+			\max (\prod_{i=1}^{m} (a^{T}_{i} x - b_{i}))^{1/m}
+		\end{equation*}
+	with domain $ {x | Ax \succeq b} $, where $ a^{T}_{i} $ is the $ i $th row of $ A $.
+\end{enumerate}
+\textcolor{red}{\textbf{Solution:}}
+\\
+\begin{gather*}
+	x^{T}x \leq yz \Leftrightarrow 4 x^{T}x \leq 4yz = (y+z)^{2} - (y-z)^{2} \Leftrightarrow 4 x^{T}x + (y-z)^{2} \leq (y+z)^{2} \Leftrightarrow \Bigg|\Bigg|\begin{bmatrix}
+		2x 
+		\\
+		y-z
+	\end{bmatrix}\Bigg|\Bigg|_{2} \leq y + z
+\end{gather*}
+\begin{enumerate}
+	\item
+		\begin{equation*}
+			\max (\sum_{i=1}^{m} 1/(a^{T}_{i} x - b_{i}))^{-1} \equiv \min \sum_{i=1}^{m} 1/(a^{T}_{i} x - b_{i})
+		\end{equation*}
+	By taking $ t_{i} = 1/(a^{T}_{i} x - b_{i}) $, we can rewrite this problem like below
+		\begin{gather*}
+			\min 1^{T}t
+			\\
+			\text{subject to : } t_{i}(aT i x + bi) \geq 1, \; i = 1,\dots,m
+		\end{gather*}
+	Second-order cone programming version is:
+		\begin{gather*}
+			\min 1^{T}t
+			\\
+			\text{subject to : } \Bigg|\Bigg| 
+				\begin{bmatrix}
+					2 
+					\\
+					a_{i}^{T}x + b_{i} - t
+				\end{bmatrix}
+			  \Bigg|\Bigg|_{2} \leq a_{i}^{T}x + b_{i} + t, \; i = 1,\dots,m
+			  \\
+			  t_{i} ≥ 0; a^{T}_{i} x + b_{i} \geq 0, \; i = 1,\dots,m
+		\end{gather*}
+	\item
+	\begin{equation*}
+		\max (\prod_{i=1}^{m} (a^{T}_{i} x - b_{i}))^{1/m} \equiv \max \prod_{i=1}^{m} (a^{T}_{i} x - b_{i})
+	\end{equation*}
+	Without loss of generality, we assume that $ m = 2^{n} $. We can add some term that will not affect the objective, like $ a^{T}_{i}=0, b_{i} = 1 $.
+	\\
+	For $ m=4 $, we will have
+	\begin{gather*}
+		\max y_{1}y_{2}y_{3}y_{4}
+		\\
+		\text{sibject to : }
+		\begin{cases}
+			y = Ax - b
+			\\
+			y \succeq 0 
+		\end{cases} 
+	\end{gather*}
+	By taking $ y_{1}y_{2} = t_{1} $ and $ y_{3}y_{4} = t_{2} $, we will have 
+	\begin{gather*}
+		\max t_{1}t_{2} \\
+		\text{sibject to : }
+		\begin{cases}
+			y = Ax - b \\
+			y_{1}y_{2} \geq t^{2}_{ 1} \\
+			y_{3}y_{4} \geq t^{2}_{ 2} \\
+			t_{1} t_{2} \geq t^{2} \\
+			y \succeq 0, t_{1}, t_{2}, t \geq 0
+		\end{cases} 
+	\end{gather*} 
+	By taking $ t = t_{1}t_{2} $, we will have the SOCP version of problem as followed:
+	\begin{gather*}
+		\min -t
+		\\
+		\text{sibject to : }
+		\begin{cases}
+			\Bigg|\Bigg|
+			\begin{bmatrix}
+				 2t_{1}
+				 y_{1} - y_{2}
+			\end{bmatrix} 
+			\Bigg|\Bigg|
+			\leq y_{1} + y_{2}, \quad y_{1} \geq 0, y_{2} \geq 0
+			\\
+			\Bigg|\Bigg|
+			\begin{bmatrix}
+				2t_{2}
+				y_{3} - y_{4}
+			\end{bmatrix} 
+			\Bigg|\Bigg|
+			\leq y_{3} + y_{4}, \quad y_{3} \geq 0, y_{4} \geq 0
+			\\
+			\Bigg|\Bigg|
+			\begin{bmatrix}
+				2t
+				t_{1} - t_{2}
+			\end{bmatrix} 
+			\Bigg|\Bigg|
+			\leq t_{1} + t_{2}, \quad t_{1} \geq 0, t_{2} \geq 0
+			\\
+			y = Ax - b
+		\end{cases} 
+	\end{gather*} 
+	For greater $ m $, we will have the same strategy and each time, we will combine two variable into a new variable and at the end we are going to have just one variable with lots of constrains. So the final result is like this:
+	\begin{gather*}
+		\min t_{00}
+		\\
+		\text{subject to : } 
+			\begin{cases}
+			t_{K-1,j-1} = a^{T}_{j} x - b_{j} \qquad j = 1, \dots, m
+			\\
+			t_{ik}^{2} \leq t_{i+1,2^{k}}t_{i+1;2^{k}+1} \qquad i = 0, \dots, K - 2, \; k = 0, \dots, 2^{i}- 1
+			\\
+			Ax \succeq b
+		\end{cases}
+	\end{gather*}
+\end{enumerate}	
+\end{latin}

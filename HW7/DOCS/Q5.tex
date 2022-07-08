@@ -1,0 +1,66 @@
+\begin{latin}
+
+\section{3.10 Weighted geometric mean.}
+The geometric mean $ f(x) = (\prod_{k} x_{k})^{1/n} $ with dom $ f = R^{n}_{++} $ is concave, as shown on page 74. Extend the proof to show that
+\begin{equation*}
+	f(x) = \prod_{k=1}^{n} x_{k}^{\alpha_k} 
+	\qquad
+	\text{dom } f = R^{n}_{++}
+\end{equation*}
+is concave, where $ \alpha_k $ are nonnegative numbers with $ \sum_{k} \alpha_k = 1 $.
+\\
+\textcolor{red}{\textbf{Solution:}}
+\\
+We will prove this by showing the hessian of $ f $ is negative definite.
+\begin{gather*}
+	\begin{cases}
+		\frac{\partial^{2}}{\partial^{2} x_{i}} f(x) = \alpha_i (\alpha_i-1) x_{i}^{\alpha_i-2} \prod_{k \neq i} x_{k}^{\alpha_k} =  \alpha_i (\alpha_i-1) f(x)/x_{i}^{2}
+		\\
+		\frac{\partial^{2}}{\partial x_{i} \partial x_{j}} f(x) = \alpha_i x_{i}^{\alpha_i-1} \alpha_j x_{j}^{\alpha_j-1} \prod_{k \neq i,j} x_{k}^{\alpha_k} = \alpha_i \alpha_j  f(x)/(x_{i} x_{j})
+		\\
+		\nabla^{2} f(x) = f(x) 
+		\begin{bmatrix}
+			\frac{\alpha_1 (\alpha_1-1)}{x_{1}^{2}} & \frac{\alpha_1 \alpha_2}{x_{1} x_{2}} & \dots & \frac{\alpha_1 \alpha_n}{x_{1} x_{n}}
+			\\
+			\frac{\alpha_1 \alpha_2}{x_{1} x_{2}} & \frac{\alpha_2 (\alpha_2-1)}{x_{2}^{2}} & \dots & \frac{\alpha_2 \alpha_n}{x_{1} x_{n}}
+			\\
+			\vdots & \vdots & \vdots & \vdots
+			\\
+			\frac{\alpha_1 \alpha_n}{x_{1} x_{n}} & \frac{\alpha_2 \alpha_n}{x_{2} x_{n}} & \dots & \frac{\alpha_n (\alpha_n-1)}{x_{n}^{2}}
+		\end{bmatrix}
+	\end{cases}
+\end{gather*}
+If the diagonal elements of $ \nabla^{2} f(x) $ were $ \nabla^{2}_{i,i} f(x) =  f(x) \frac{\alpha_1 \alpha_1}{x_{1} x_{1}} $, we could write as 
+\begin{gather*}
+	q = (\frac{\alpha_1}{x_1},\frac{\alpha_2}{x_2}, \dots , \frac{\alpha_n}{x_n})
+	\\
+	qq^{T} = \begin{bmatrix}
+		\frac{\alpha_1^{2}}{x_{1}^{2}} & \frac{\alpha_1 \alpha_2}{x_{1} x_{2}} & \dots & \frac{\alpha_1 \alpha_n}{x_{1} x_{n}}
+		\\
+		\frac{\alpha_1 \alpha_2}{x_{1} x_{2}} & \frac{\alpha_2^{2}}{x_{2}^{2}} & \dots & \frac{\alpha_2 \alpha_n}{x_{1} x_{n}}
+		\\
+		\vdots & \vdots & \vdots & \vdots
+		\\
+		\frac{\alpha_1 \alpha_n}{x_{1} x_{n}} & \frac{\alpha_2 \alpha_n}{x_{2} x_{n}} & \dots & \frac{\alpha_n^{2}}{x_{n}^{2}}
+	\end{bmatrix}
+	\\
+	\nabla^{2} f(x) =  f(x) qq^{T}
+\end{gather*}
+We should change the diagonal elements of hessian. So we will use diagonal matrix:
+\begin{gather*}
+	\nabla^{2} f(x) =  f(x) (qq^{T} - diag(\alpha)^{-1} diag(q)^{2}) 
+	\\
+	y^{T} \nabla^{2} f(x) y = f(x) \bigg( y^{T}qq^{T}y - y^{T} diag(\alpha)^{-1} diag(q)^{2}y  \bigg)
+	\\
+	 = f(x) \bigg( \sum_{k=1}^{n} \big(\frac{\alpha_k y_k}{x_k}\big)^{2} - \sum_{k=1}^{n} \frac{\alpha_k y_k^{2}}{x_k^{2}} \bigg)
+\end{gather*}
+By taking $ a = (\sqrt{\alpha_1}\frac{y_{1}}{x_{1}}, \sqrt{\alpha_2}\frac{y_{2}}{x_{2}}, \dots, \sqrt{\alpha_n}\frac{y_{n}}{x_{n}}) $ and $ b = (\sqrt{\alpha_1},\sqrt{\alpha_2},\dots,\sqrt{\alpha_n}) $ and Cauchy-Schwarz inequality, we will have
+\begin{gather*}
+	||a^{T}b||_{2}^{2} \leq ||a||_{2}^{2} ||b||_{2}^{2} = ||a||_{2}^{2} \qquad (||b||_{2}^{2} = \sum_{i=1}^{n} \alpha_i = 1)
+	\\
+	\sum_{k=1}^{n} \big(\frac{\alpha_k y_k}{x_k}\big)^{2} \leq \sum_{k=1}^{n} \frac{\alpha_k y_k^{2}}{x_k^{2}}
+	\\
+	\Rightarrow y^{T} \nabla^{2} f(x) y \leq 0 \Rightarrow \nabla^{2} f(x) \preceq 0
+\end{gather*}
+So $ f $ in concave. 
+\end{latin}

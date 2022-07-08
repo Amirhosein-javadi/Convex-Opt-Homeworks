@@ -1,0 +1,34 @@
+\begin{latin}
+
+\section{3.6 Two problems involving two norms.}
+
+Show that $ f(X; t) = nt \log t - t \log \det X $, with dom $ f = S^{n}_{++} \times R_{++} $, is convex in $ (X; t) $. Use this to show that
+\begin{equation*}
+	g(X) = n(tr X) \log(tr X) - (tr X)(\log \det X) = n (\sum_{i=1}^{n} 
+	\lambda_i) (\log \sum_{i=1}^{n} \lambda_i - \sum_{i=1}^{n} \log \lambda_i)
+\end{equation*}
+where $ \lambda_i $ are the eigenvalues of $ X $, is convex on $ S^{n}_{++} $.
+\\
+\textcolor{red}{\textbf{Solution:}}
+\\
+This is the perspective function applied on $ - \log \det X $. 
+\begin{equation*}
+	f(X, t) = t [- \log \det(\frac{X}{t})] = nt \log t - \log \det X
+\end{equation*}
+This is because a scaled version of a matrix has an exponential scaled version of determinant.
+\begin{equation*}
+	\log \det(\frac{X}{t})= \log t^{-n} \det(X) = -n + \log \det(X)
+\end{equation*}
+$ g $ is convexity because it is $ g(X) = f(X, tr X) $
+\begin{gather*}
+	 g(X) = f(X, tr X) = n \; trX \log tr X - \log \det X
+	 \\
+	 X = Q \Sigma Q^{T} \Rightarrow tr(X) = tr(Q \Sigma Q^{T}) = tr(Q^{T} Q \Sigma) = tr(\Sigma) = \sum_{i=1}^{n} \lambda_i
+	 \\
+	 \det(X) = \prod_{i=1}^{n} \lambda_i
+	 \\
+	 \Rightarrow g(X) = n (\sum_{i=1}^{n} 
+	 \lambda_i) (\log \sum_{i=1}^{n} \lambda_i - \sum_{i=1}^{n} \log \lambda_i)
+\end{gather*}
+	  $ tr X $ is both positive and a linear function of $ X $. As a result, $ g(X) $ is convex on $ S^{n}_{++} $.
+\end{latin}

@@ -1,0 +1,106 @@
+\begin{latin}
+
+\section{4.43 Eigenvalue optimization via SDP.}
+Suppose $ A : R^{n} \to S^{m} $ is affine, i.e.,
+\begin{equation*}
+	A(x) = A_{0} + x_{1}A_{1} + \dots + x_{n}A_{n}
+\end{equation*}
+where $ A_{i} \in S^{m}.$  Let $ \lambda_{1}(x) \geq \lambda_2(x) \geq \dots \geq \lambda_m(x) $ denote the eigenvalues of $ A(x) $. Show
+how to pose the following problems as SDPs.
+
+\begin{enumerate}
+	\item Minimize the maximum eigenvalue $ \lambda_1(x) $.
+	\item Minimize the spread of the eigenvalues, $ \lambda_1(x) - \lambda_m(x) $.
+	\item Minimize the condition number of $ A(x) $, subject to $ A(x) \succ 0 $. The condition number is defined as $ \kappa(A(x)) = \lambda_1(x)/\lambda_m(x) $, with domain $ \{x | A(x) \succ 0\} $. You may assume that $ A(x) \succ 0 $ for at least one $ x $.
+	\\
+	Hint. You need to minimize $ \lambda/\gamma $, subject to
+	\begin{equation*}
+		0 \prec \gamma I \prec A(x) \prec \lambda I
+	\end{equation*}
+	Change variables to $ y = x/\gamma $, $ t = \lambda/\gamma $, $ s = 1/\gamma $.
+	\item Minimize the sum of the absolute values of the eigenvalues, $ |\lambda_1(x)| + \dots + |\lambda_m(x)| $.
+	\\
+	Hint. Express $ A(x) $ as $ A(x) = A_{+} - A_{-} $, where $ A_{+} \succeq 0, A_{-} \succeq 0 $.
+\end{enumerate}
+\textcolor{red}{\textbf{Solution:}}
+\\
+\begin{enumerate}
+	\item 
+	\begin{gather*}
+		\lambda_1(x) \leq t  \Leftrightarrow A(x) \preceq tI
+		\\
+		\Rightarrow \text{The SDP problem would be:}
+		\\
+		\min t
+		\\
+		\text{subject to } A(x) \preceq tI
+	\end{gather*}
+	\item
+	\begin{gather*}
+		\lambda_1(x) \leq t_{1}  \Leftrightarrow A(x) \preceq t_{1}I
+		\\
+		\lambda_2(x) \geq t_{2}  \Leftrightarrow A(x) \succeq t_{2}I
+		\\
+		\Rightarrow \text{The SDP problem would be:}
+		\\
+		\min (t_{1} - t_{2})
+		\\
+		\text{subject to } t_{2}I \preceq A(x) \preceq t_{1}I
+	\end{gather*}
+	\item As the hint suggests, we need to solve this problem
+	\begin{gather*}
+		\min \frac{\lambda}{\gamma} 
+		\\
+		\text{subject to } \lambda I \preceq A(x) \preceq \gamma I
+	\end{gather*}
+	This problem is quasiconvex, and can be solved by bisection. 
+	\begin{equation*}
+		\lambda \leq \gamma \alpha, \qquad \lambda I \preceq A(x) \preceq \gamma I, \gamma > 0
+	\end{equation*}
+	From the hint, by taking $ y = x/\gamma $, $ t = \lambda/\gamma $, $ s = 1/\gamma $, we will have a SDP problem below
+	\begin{gather*}
+		\min t
+		\\
+		\text{subject to } I \preceq sA_{0} + y_{1}A_{1} + \dots + y_{n}A_{n} \preceq tI, \qquad s \geq 0
+	\end{gather*}
+	We should show that these two problems are equivalent. We do this by showing that the optimal answer to first problem is feasible in the SDP problem and vise versa.
+	\begin{itemize}
+		\item 
+			 Let $ (\gamma, \lambda, x) $ be the the optimal point for the first problem. By taking $ s = 1/\gamma, y = x/\gamma, t = \lambda/\gamma $, we see that $ (s,y,t) $ is feasible in SDP problem. So the optimal value of first problem ($ p_{1}^{*} $) is greater or equal with the optimal value of SDP problem($ p_{2}^{*} $). 
+	 	\item 
+	 		Let $ (s,y,t) $ be the the optimal point for the SDP problem.  If $ s > 0 $, then by taking $ \gamma = 1/s, x = y/s, \lambda = t/s $, we see that $ (\gamma, \lambda, x) $ is feasible in the first problem. If $ s = 0 $, we have $  I \preceq y_{1}A_{1} + \dots + y_{n}A_{n} \preceq tI $.
+	 		By taking $ x = ky $, we will have 
+	 		\begin{gather*}
+	 			kI \preceq ky_{1}A_{1} + \dots + ky_{n}A_{n} = x_{1}A_{1} + \dots + x_{n}A_{n} = A(x) - A_{0}
+	 			\\
+	 			\Rightarrow A(x) \succeq kI + A_{0}
+	 		\end{gather*}
+ 			By tending k to $ \infty $, we will have $ A(x) \succeq kI + A_{0} \succ 0 $. So we will have these two bonds
+ 			\begin{gather*}
+ 				\lambda_1(x) = \lambda_1(ky) \leq \lambda_{1}(A_{0}) + kt = \lambda_1(0) + kt
+ 				\\
+ 				\lambda_m(x) = \lambda_m(ky) \geq \lambda_{m}(A_{0})  + k = \lambda_m(0) + k
+ 				\\
+ 				\Rightarrow \frac{\lambda_1(x)}{\lambda_m(x)} = \frac{\lambda_1(0) + kt}{\lambda_m(0) + k} \to t
+ 			\end{gather*}
+ 			Letting $ k $ go to infinity, we can construct feasible points in first problem. So the optimal value of SDP problem ($ p_{2}^{*} $) is greater or equal with the optimal value of first problem($ p_{1}^{*} $). 
+	\end{itemize}
+	As a result, $ p_{1}^{*} = p_{2}^{*} $ and the two problems are equivalent. 
+	\item By writing $ A(x) = A_{+} - A_{-} $, we will have SDP problem
+	\begin{gather*}
+		\min tr(A_{+}) + tr(A_{-})
+		\\
+		\text{subject to } 
+		\begin{cases}
+			A(x) = A_{+} - A_{-}
+			\\
+			A_{+} \succeq 0 A_{−} \succeq 0
+		\end{cases}
+	\end{gather*}
+	The reason for this is that we can divide the matrix A to two matrix  $ A_{+} $ and $ A_{-} $. $ A_{+} $ contains the positive eigenvalue of matrix $ A $ and $ A_{-} $ contains the negative eigenvalue of matrix $ A $ with opposite sign. So the sum of positive eigenvalues is the trace of $ A_{+} $ and the minus sum of negative eigenvalues is the trace of $ A_{-} $. So basically, if we have the eigenvalue decomposition of $ A(x) = Q \Lambda Q^{T} $. Then  $ A_{+} = Q \Lambda_{+} Q^{T} $ and $ A_{-} = Q \Lambda_{-} Q^{T} $. $ \Lambda_{+} $ keeps all the positive eigenvalue of $ A(x) $ and replace all negative eigenvalues of $ A(x) $ with zero. $ \Lambda_{-} $ keeps all the negative eigenvalue of $ A(x) $ with positive sign and replace all positive eigenvalues of $ A(x) $ with zero. So $ A(x) = A_{+} - A_{-} $. This is the idea. So for a fixed $ x $, we calculate the $ A_{+} $ and $ A_{-} $. By minimizing
+	over $ x, A_{+}, and A_{−} $ we will minimize $ \sum_{i=1}^{m} |\Lambda_i(A(x))| $.
+	\\
+	
+\end{enumerate}
+
+\end{latin}

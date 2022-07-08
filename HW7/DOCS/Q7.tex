@@ -1,0 +1,59 @@
+
+	
+\section{
+	طراحی ماسک صورت
+}
+هزینه‌ی هر سانتی‌متر مربع از فیلتر را دو واحد پول و هر سانتی‌متر از نوار الاسیتک را یک واحد پول در نظر میگیریم. پس هدف مینیمم کردن تابع هدف زیر است. 
+\begin{latin}
+	\begin{equation*}
+		\text{minimum } [2(lw) + (\pi w + 2 l)]
+	\end{equation*}
+\end{latin}
+ترم اول مساحت فیلتر است که در دو واحد پول ضرب شده است. ترم دوم طول نوار است که در یک واحد پول ضرب شده است. مساحت فیتلر باید حداقل 300 سانتی‌متر مربع باشد. همچنین روی نسبت ابعاد محدودیت داریم. آخرین محدودیت هم برابر است با محدودیت روی اندازه طول و عرض. با اعمال این محدودیت‌ها به مسئله زیر میرسیم.
+\begin{latin}
+	\begin{gather*}
+		\text{minimum } [2(lw) + (\pi w + 2 l)]
+		\\
+		\text{subject to }
+		\begin{cases}
+			lw \geq 300
+			\\
+			1 \leq \frac{l}{w} \leq 2
+			\\
+			10 \leq w \leq 20
+			\\
+			20 \leq l \leq 30
+		\end{cases}
+	\end{gather*}
+\end{latin}
+برای حل این مسئله از 
+\lr{Geometric programming}
+استفاده کردم. به این صورت که تعریف کردم
+\begin{equation*}
+	y_{1} = \log l  \qquad y_{2} = \log w
+\end{equation*}
+پس مسئله بهینه‌سازی به شکل زیر تبدیل شد.
+\begin{gather*}
+	\text{minimum } [2(\exp(y_{1}+y_{2})) + (\pi \exp(y_{2}) + 2 \exp(y_{1}))]
+	\\
+	\text{subject to }
+	\begin{cases}
+		y_{1} + y_{2} \geq \log(300)  
+		\\
+		\log(20) \leq y_{1} \leq \log(30)
+		\\
+		\log(10) \leq y_{2} \leq \log(20)
+		\\
+		y_{2} \leq y_{1} \leq  \log(2) + y_{2}
+	\end{cases}
+\end{gather*}
+مسئله به حالت خطی در آمد و نتیجه نهایی به شکل زیر شد
+\begin{gather*}
+	\begin{cases}
+		l = 21.92686359686865
+		\\
+		w = 14.069807153270846
+		\\
+		\text{\lr{Optimal cost : }} 686.1695947067898 \approx 687
+	\end{cases}
+\end{gather*}
